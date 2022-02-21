@@ -11,6 +11,7 @@ import styles from './piano-app.css';
  */
 class PianoApp extends LitElement {
 	public static tagName = 'piano-app';
+	public static version = '1.0.0';
 	public static dependencies: Array<CustomElementConstructor> = [PianoKeyboard, UiModal, UiToggle];
 	public static styles: CSSResultGroup = styles;
 

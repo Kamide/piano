@@ -1,0 +1,19 @@
+body {
+	all: unset;
+}
+
+:root {
+	font-size: 16px;
+}
+
+html, body, piano-app {
+	block-size: 100%;
+	inline-size: 100%;
+}
+
+body {
+	background: black;
+	color: white;
+	font-family: sans-serif;
+	overscroll-behavior: contain;
+}

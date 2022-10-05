@@ -5,7 +5,7 @@ import { SynthesizerOscillator } from './synthesizer-oscillator';
 
 class Synthesizer extends SynthesizerNode {
 	private compressor: DynamicsCompressorNode;
-	private gainEnvelope: SynthesizerEnvelope;
+	public gainEnvelope: SynthesizerEnvelope;
 	public wave: OscillatorType | PeriodicWave;
 	public noteZero: SynthesizerNote;
 	private oscillators: Array<SynthesizerOscillator>;

@@ -6,6 +6,8 @@ import { UiModal, UiToggle } from '../ui/index';
 import { PianoKeyboard } from './piano-keyboard';
 import styles from './piano-app.css';
 
+const defaultGainEnvelope = Object.freeze(new SynthesizerEnvelope(0, 0, 0.1, 1, 0.1, 0.8, 0.1));
+
 /**
  * @todo Gain envelope menu
  */
@@ -20,6 +22,7 @@ class PianoApp extends LitElement {
 		['square', 'Square'],
 		['sawtooth', 'Sawtooth'],
 		['triangle', 'Triangle'],
+		['flute', 'Flute'],
 	];
 
 	public static frequencies: Array<[string, string]> = [
@@ -47,7 +50,7 @@ class PianoApp extends LitElement {
 		keyLabelSource: { type: String, attribute: 'key-label-source', reflect: true },
 	};
 
-	private wave: OscillatorType;
+	private wave: OscillatorType | 'flute';
 	private frequencyString: string;
 	private volume: number;
 	private minimumNoteDuration: number;
@@ -63,7 +66,7 @@ class PianoApp extends LitElement {
 		this.wave = 'triangle';
 		this.frequencyString = '130.8128';
 		this.volume = 1;
-		this.gainEnvelope = new SynthesizerEnvelope(0, 0, 0.1, 1, 0.1, 0.8, 0.1);
+		this.gainEnvelope = defaultGainEnvelope;
 		this.synthesizer = new Synthesizer(this.gainEnvelope, this.wave, this.frequency);
 		this.minimumNoteDuration = 0.25;
 		this.keyLabelSource = 'names';
@@ -87,7 +90,16 @@ class PianoApp extends LitElement {
 		super.updated(changedProperties);
 
 		if (changedProperties.has('wave')) {
-			this.synthesizer.wave = this.wave;
+			if (this.wave === 'flute') {
+				this.synthesizer.wave = 'triangle';
+				this.gainEnvelope = new SynthesizerEnvelope(0.1, 0, 0.1, 0.8, 0.1, 0.4, 0.15);
+				this.synthesizer.gainEnvelope = this.gainEnvelope;
+			}
+			else {
+				this.synthesizer.wave = this.wave;
+				this.gainEnvelope = defaultGainEnvelope;
+				this.synthesizer.gainEnvelope = this.gainEnvelope;
+			}
 		}
 		if (changedProperties.has('volume')) {
 			this.synthesizer.volume = this.volume;

@@ -124,6 +124,7 @@ class UiModal extends LitElement {
 						<slot name="title"></slot>
 					</span>
 					<button
+						type="button"
 						part="close-button"
 						@pointerdown="${this.close}"
 					>

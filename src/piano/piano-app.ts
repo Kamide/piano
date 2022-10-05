@@ -150,7 +150,7 @@ class PianoApp extends LitElement {
 	protected renderInstrumentSettings(): TemplateResult {
 		return html`
 			<ui-toggle>
-				<button class="menu-item">
+				<button type="button" class="menu-item">
 					🎹
 				</button>
 				<ui-modal slot="toggled">
@@ -192,7 +192,7 @@ class PianoApp extends LitElement {
 
 		return html`
 			<ui-toggle>
-				<button class="menu-item">
+				<button type="button" class="menu-item">
 					${icon}
 				</button>
 				<ui-modal slot="toggled">
@@ -218,7 +218,7 @@ class PianoApp extends LitElement {
 	protected renderSettings() {
 		return html`
 			<ui-toggle>
-				<button class="menu-item">⚙️</button>
+				<button type="button" class="menu-item">⚙️</button>
 				<ui-modal
 					slot="toggled"
 					i0="1" b0="1"

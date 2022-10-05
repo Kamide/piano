@@ -89,6 +89,7 @@ class PianoKey extends LitElement {
 	protected render(): TemplateResult {
 		return html`
 			<button
+				type="button"
 				part=${this.buttonParts}
 				@pointerdown="${this.start}"
 				@pointerup="${this.stop}"

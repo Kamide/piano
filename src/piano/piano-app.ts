@@ -13,7 +13,7 @@ const defaultGainEnvelope = Object.freeze(new SynthesizerEnvelope(0, 0, 0.1, 1, 
  */
 class PianoApp extends LitElement {
 	public static tagName = 'piano-app';
-	public static version = '1.0.0';
+	public static version = '1.1.0';
 	public static dependencies: Array<CustomElementConstructor> = [PianoKeyboard, UiModal, UiToggle];
 	public static styles: CSSResultGroup = styles;
 

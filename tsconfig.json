@@ -1,8 +1,8 @@
 {
 	"compilerOptions": {
-		"target": "es2019",
+		"target": "es2022",
+		"module": "es2022",
 		"experimentalDecorators": true,
-		"module": "es6",
 		"rootDir": "./src",
 		"moduleResolution": "node",
 		"outDir": "./dist",

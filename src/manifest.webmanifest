@@ -2,16 +2,26 @@
 	"$schema": "https://json.schemastore.org/web-manifest-combined.json",
 	"name": "Piano",
 	"short_name": "Piano",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"description": "Web Audio API Synthesizer",
 	"start_url": "./index.html",
+	"id": "./index.html",
 	"display": "standalone",
+	"orientation": "portrait",
 	"background_color": "black",
+	"theme_color": "black",
 	"icons": [
 		{
 			"src": "./favicon.ico",
 			"sizes": "512x512",
-			"type": "image/png"
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "./maskable.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "maskable"
 		}
 	]
 }

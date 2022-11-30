@@ -1,6 +1,8 @@
 # Piano
 
-**Piano** is a synthesizer made with Web Audio API.
+**Piano** is a PWA synthesizer made with Web Audio API.
+
+![App Screenshot](./screenshot.png)
 
 ## Deployments
 
@@ -10,3 +12,4 @@
 
 - Lit
 - TypeScript
+- Workbox

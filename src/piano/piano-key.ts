@@ -7,20 +7,17 @@ export class PianoKey extends LitElement {
 	public static properties: PropertyDeclarations = {
 		noteNumber: { type: Number, attribute: 'note-number', reflect: true },
 		key: { type: String, reflect: true },
-		down: { type: Boolean, reflect: true },
 		labelSource: { type: String, attribute: 'label-source', reflect: true },
 	};
 
 	private noteNumber: number;
 	private key: string;
-	private down: boolean;
 	private labelSource: string;
 
 	public constructor() {
 		super();
 		this.noteNumber = 0;
 		this.key = '';
-		this.down = false;
 		this.labelSource = 'names';
 	}
 
@@ -38,14 +35,6 @@ export class PianoKey extends LitElement {
 
 	public get names(): Array<string> {
 		return SynthesizerNote.namesOf(this.noteNumber);
-	}
-
-	public get buttonParts(): string {
-		const parts: Array<string> = ['key'];
-		this.down && parts.push('down');
-		this.natural && parts.push('natural');
-		this.accidental && parts.push('accidental');
-		return parts.join(' ');
 	}
 
 	private start(event: PointerEvent) {
@@ -85,14 +74,11 @@ export class PianoKey extends LitElement {
 
 	protected render(): TemplateResult {
 		return html`
-			<button
-				type='button'
-				part=${this.buttonParts}
+			<button class='key ${this.natural ? 'natural' : 'accidental'}' type='button' tabindex='-1'
 				@pointerdown='${this.start}'
 				@pointerup='${this.stop}'
 				@pointerenter='${this.start}'
 				@pointerleave='${this.stop}'
-				tabindex='-1'
 			>
 				<span part='labels'>
 					${this.renderLabels()}
@@ -106,26 +92,25 @@ export class PianoKey extends LitElement {
 			display: block;
 		}
 
-		[part~='key'] {
+		.key {
 			all: unset;
 			user-select: none;
 		}
 
-		[part~='key'], [part='labels'] {
+		.key, [part='labels'] {
 			block-size: 100%;
 			box-sizing: border-box;
 			inline-size: 100%;
-			position: relative;
 		}
 
-		[part~='natural'] {
+		.natural {
 			--background: white;
 			--border-color: hsl(0, 0%, 30%);
 			--font-size: 1em;
 			--text-color: black;
 		}
 
-		[part~='accidental'] {
+		.accidental {
 			--background: hsl(0, 0%, 10%);
 			--border-color: hsl(0, 0%, 30%);
 			--font-size: 0.8em;
@@ -142,16 +127,14 @@ export class PianoKey extends LitElement {
 			display: grid;
 			font-size: var(--font-size);
 			grid-template-rows: 1fr auto;
-			inset-block-start: 0;
 			justify-items: center;
 			padding: 0.5em;
 			pointer-events: none;
-			transition: inset-block-start 0.125s;
+			transition: transform 0.125s;
 		}
 
-		[part~='down'] [part='labels'] {
-			inset-block-start: 0.5em;
-			position: absolute;
+		:host([down]) [part='labels'] {
+			transform: translateY(0.5em);
 			transition: none;
 		}
 	`;

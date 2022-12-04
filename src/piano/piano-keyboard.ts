@@ -1,4 +1,5 @@
 import { css, CSSResultGroup, html, LitElement, PropertyDeclarations, TemplateResult } from 'lit';
+import { styleMap } from 'lit/directives/style-map';
 import { Synthesizer, SynthesizerNote, SynthesizerOscillator } from '../synthesizer/index';
 import { KeyToNoteNumber } from './key-to-note-number';
 import { PianoKey } from './piano-key';
@@ -118,17 +119,16 @@ export class PianoKeyboard extends LitElement {
 			zIndex = row + 1;
 		}
 
-		const style = `
-			grid-row-start: ${8 - row - 1};
-			grid-row-end: span ${rowSpan};
-			grid-column-start: ${column + 1};
-			grid-column-end: span 2;
-			z-index: ${zIndex};
-		`.replace(/[\t\n]/g, '');
+		const style = styleMap({
+			gridRowStart: String(8 - row - 1),
+			gridRowEnd: `span ${rowSpan}`,
+			gridColumnStart: String(column + 1),
+			gridColumnEnd: 'span 2',
+			zIndex: String(zIndex),
+		});
 
 		return html`
-			<piano-key note-number=${noteNumber} key='${key}' .down='${this.keyToOscillatorMap.has(key)}'
-				label-source='${this.labelSource}' style='${style}'></piano-key>
+			<piano-key note-number=${noteNumber} key='${key}' ?down='${this.keyToOscillatorMap.has(key)}' label-source='${this.labelSource}' style='${style}'></piano-key>
 		`;
 	}
 

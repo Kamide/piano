@@ -278,17 +278,13 @@ export class PianoApp extends LitElement {
 			margin-block-end: 0.25em;
 		}
 
-		[part~='input'] {
+		[part='input'] {
 			font-size: 0.875em;
 			padding: 0.5em;
 		}
 
 		[part='volume-slider'] {
 			inline-size: 10em;
-		}
-
-		piano-keyboard::part(key) {
-			background: red;
 		}
 	`;
 }

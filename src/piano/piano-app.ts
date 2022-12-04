@@ -11,7 +11,7 @@ const defaultGainEnvelope = Object.freeze(new SynthesizerEnvelope(0, 0, 0.1, 1, 
  */
 export class PianoApp extends LitElement {
 	public static tagName = 'piano-app';
-	public static version = '1.1.1';
+	public static version = '1.1.2';
 	public static dependencies: Array<CustomElementConstructor> = [PianoKeyboard, UiModal, UiToggle];
 
 	public static waves: Array<[string, string]> = [

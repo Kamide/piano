@@ -1,13 +1,13 @@
-type PhysicalAxis = 'x' | 'y';
-type LogicalAxis = 'inline' | 'block';
+export type PhysicalAxis = 'x' | 'y';
+export type LogicalAxis = 'inline' | 'block';
 
-type PhysicalEdge = 'left' | 'right' | 'top' | 'bottom';
-type LogicalEdge = 'inlineStart' | 'inlineEnd' | 'blockStart' | 'blockEnd';
+export type PhysicalEdge = 'left' | 'right' | 'top' | 'bottom';
+export type LogicalEdge = 'inlineStart' | 'inlineEnd' | 'blockStart' | 'blockEnd';
 
-type PhysicalSize = 'width' | 'height';
-type LogicalSize = 'inlineSize' | 'blockSize';
+export type PhysicalSize = 'width' | 'height';
+export type LogicalSize = 'inlineSize' | 'blockSize';
 
-type WritingDirection = {
+export type WritingDirection = {
 	[P in PhysicalAxis]: LogicalAxis;
 } & {
 	[P in PhysicalEdge]: LogicalEdge;
@@ -15,7 +15,7 @@ type WritingDirection = {
 	[P in PhysicalSize]: LogicalSize;
 };
 
-function getWritingDirection(element: Element): WritingDirection {
+export function getWritingDirection(element: Element): WritingDirection {
 	const style: CSSStyleDeclaration = getComputedStyle(element);
 	const { writingMode, direction }: CSSStyleDeclaration = style;
 
@@ -83,5 +83,3 @@ function getWritingDirection(element: Element): WritingDirection {
 
 	return { x, y, left, right, top, bottom, width, height };
 }
-
-export { PhysicalAxis, LogicalAxis, PhysicalEdge, LogicalEdge, PhysicalSize, LogicalSize, WritingDirection, getWritingDirection };

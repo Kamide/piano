@@ -1,21 +1,18 @@
 import { createRef, Ref, ref } from 'lit/directives/ref';
-import { CSSResultGroup, html, LitElement, PropertyDeclarations, PropertyValues, TemplateResult } from 'lit';
-
+import { css, CSSResultGroup, html, LitElement, PropertyDeclarations, PropertyValues, TemplateResult } from 'lit';
 import { Synthesizer, SynthesizerEnvelope } from '../synthesizer';
 import { UiModal, UiToggle } from '../ui/index';
 import { PianoKeyboard } from './piano-keyboard';
-import styles from './piano-app.css';
 
 const defaultGainEnvelope = Object.freeze(new SynthesizerEnvelope(0, 0, 0.1, 1, 0.1, 0.8, 0.1));
 
 /**
  * @todo Gain envelope menu
  */
-class PianoApp extends LitElement {
+export class PianoApp extends LitElement {
 	public static tagName = 'piano-app';
 	public static version = '1.1.1';
 	public static dependencies: Array<CustomElementConstructor> = [PianoKeyboard, UiModal, UiToggle];
-	public static styles: CSSResultGroup = styles;
 
 	public static waves: Array<[string, string]> = [
 		['sine', 'Sine'],
@@ -127,10 +124,7 @@ class PianoApp extends LitElement {
 
 	protected renderOption(selectedValue: string): ([value, label]: [string, string]) => TemplateResult {
 		return ([value, label]: [string, string]) => html`
-			<option
-				value="${value}"
-				?selected="${value === selectedValue}"
-			>
+			<option value='${value}' ?selected='${value === selectedValue}'>
 				${label}
 			</option>
 		`;
@@ -138,10 +132,7 @@ class PianoApp extends LitElement {
 
 	protected renderSelect(options: Array<[string, string]>, inputHandler: (event: InputEvent) => void, selectedValue: string): TemplateResult {
 		return html`
-			<select
-				part="input"
-				@input="${inputHandler}"
-			>
+			<select part='input' @input='${inputHandler}'>
 				${options.map(this.renderOption(selectedValue))}
 			</select>
 		`;
@@ -150,23 +141,20 @@ class PianoApp extends LitElement {
 	protected renderInstrumentSettings(): TemplateResult {
 		return html`
 			<ui-toggle>
-				<button type="button" class="menu-item">
+				<button type='button' class='menu-item'>
 					🎹
 				</button>
-				<ui-modal slot="toggled">
-					<span slot="title">Instrument</span>
-					<div
-						part="form"
-						slot="body"
-					>
-						<label part="input-group">
-							<span part="input-label">
+				<ui-modal slot='toggled'>
+					<span slot='title'>Instrument</span>
+					<div part='form' slot='body'>
+						<label part='input-group'>
+							<span part='input-label'>
 								Wave
 							</span>
 							${this.renderSelect((this.constructor as typeof PianoApp).waves, this.setWave, this.wave)}
 						</label>
-						<label part="input-group">
-							<span part="input-label">
+						<label part='input-group'>
+							<span part='input-label'>
 								C<sub>0</sub> Frequency
 							</span>
 							${this.renderSelect((this.constructor as typeof PianoApp).frequencies, this.setFrequency, this.frequencyString)}
@@ -192,23 +180,14 @@ class PianoApp extends LitElement {
 
 		return html`
 			<ui-toggle>
-				<button type="button" class="menu-item">
+				<button type='button' class='menu-item'>
 					${icon}
 				</button>
-				<ui-modal slot="toggled">
-					<span slot="title">Volume</span>
-					<div
-						part="form"
-						slot="body"
-					>
-						<input
-							part="volume-slider"
-							type="range"
-							min="0" max="1"
-							step="0.1"
-							.value="${this.volume}"
-							@input="${this.setVolume}"
-						/>
+				<ui-modal slot='toggled'>
+					<span slot='title'>Volume</span>
+					<div part='form' slot='body'>
+						<input part='volume-slider' type='range' min='0' max='1' step='0.1' .value='${this.volume}'
+							@input='${this.setVolume}' />
 					</div>
 				</ui-modal>
 			</ui-toggle>
@@ -218,19 +197,12 @@ class PianoApp extends LitElement {
 	protected renderSettings() {
 		return html`
 			<ui-toggle>
-				<button type="button" class="menu-item">⚙️</button>
-				<ui-modal
-					slot="toggled"
-					i0="1" b0="1"
-					i1="1" b1="0"
-				>
-					<span slot="title">Settings</span>
-					<div
-						part="form"
-						slot="body"
-					>
-						<label part="input-group">
-							<span part="input-label">
+				<button type='button' class='menu-item'>⚙️</button>
+				<ui-modal slot='toggled' i0='1' b0='1' i1='1' b1='0'>
+					<span slot='title'>Settings</span>
+					<div part='form' slot='body'>
+						<label part='input-group'>
+							<span part='input-label'>
 								Key Labels From
 							</span>
 							${this.renderSelect((this.constructor as typeof PianoApp).keyLabelSources, this.setKeyLabelSource, this.keyLabelSource)}
@@ -243,25 +215,82 @@ class PianoApp extends LitElement {
 
 	protected render(): TemplateResult {
 		return html`
-			<div class="grid">
-				<div class="menu">
+			<div class='grid'>
+				<div class='menu'>
 					${this.renderInstrumentSettings()}
 					${this.renderVolumeSlider()}
-					<span aria-hidden="true"></span>
+					<span aria-hidden='true'></span>
 					${this.renderSettings()}
 				</div>
-				<piano-keyboard
-					${ref(this.keyboardRef)}
-					.synthesizer="${this.synthesizer}"
-					minimum-note-duration="${this.minimumNoteDuration}"
-					label-source="${this.keyLabelSource}"
-					tabindex="0"
-				></piano-keyboard>
+				<piano-keyboard ${ref(this.keyboardRef)} .synthesizer='${this.synthesizer}'
+					minimum-note-duration='${this.minimumNoteDuration}' label-source='${this.keyLabelSource}' tabindex='0'>
+				</piano-keyboard>
 			</div>
 		`;
 	}
+
+	static styles: CSSResultGroup = css`
+		:host {
+			display: block;
+		}
+
+		.grid {
+			block-size: 100%;
+			display: grid;
+			grid-template-rows: auto 1fr;
+			inline-size: 100%;
+		}
+
+		.menu {
+			color: white;
+			display: grid;
+			grid-template-columns: auto auto 1fr auto;
+			padding-block-end: 0.125em;
+			padding-block-start: 0.25em;
+			padding-inline: 0.25em;
+		}
+
+		.menu-item {
+			all: unset;
+			box-sizing: border-box;
+			inline-size: 100%;
+			padding-block: 0.5em;
+			padding-inline: 0.75em;
+		}
+
+		.menu-item:hover {
+			background: gray;
+			border-radius: 0.25em;
+			user-select: none;
+		}
+
+		[part='form'] {
+			display: grid;
+			gap: 1em;
+		}
+
+		[part='input-group'] {
+			display: block;
+		}
+
+		[part='input-label'] {
+			display: block;
+			margin-block-end: 0.25em;
+		}
+
+		[part~='input'] {
+			font-size: 0.875em;
+			padding: 0.5em;
+		}
+
+		[part='volume-slider'] {
+			inline-size: 10em;
+		}
+
+		piano-keyboard::part(key) {
+			background: red;
+		}
+	`;
 }
 
 customElements.define(PianoApp.tagName, PianoApp);
-
-export { PianoApp };

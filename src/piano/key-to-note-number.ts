@@ -1,4 +1,4 @@
-class KeyToNoteNumber {
+export class KeyToNoteNumber {
 	public static readonly QWERTY = new Map<string, number>([
 		// Octave 1
 		['z', 0],
@@ -54,5 +54,3 @@ class KeyToNoteNumber {
 		['7', 47],
 	]);
 }
-
-export { KeyToNoteNumber };

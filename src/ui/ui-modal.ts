@@ -1,11 +1,8 @@
-import { CSSResultGroup, html, LitElement, PropertyDeclarations, PropertyValues, TemplateResult } from 'lit';
-
+import { css, CSSResultGroup, html, LitElement, PropertyDeclarations, PropertyValues, TemplateResult } from 'lit';
 import { getLogicalCoord, getLogicalRect, LogicalCoord, LogicalRect } from '../dom/index';
-import styles from './ui-modal.css';
 
-class UiModal extends LitElement {
+export class UiModal extends LitElement {
 	public static tagName = 'ui-modal';
-	public static styles: CSSResultGroup = styles;
 
 	public static properties: PropertyDeclarations = {
 		closeEvent: { type: String, attribute: 'close-event', reflect: true },
@@ -118,27 +115,66 @@ class UiModal extends LitElement {
 
 	protected render(): TemplateResult {
 		return html`
-			<div part="grid">
-				<div part="head">
-					<span part="title">
-						<slot name="title"></slot>
+			<div part='grid'>
+				<div part='head'>
+					<span part='title'>
+						<slot name='title'></slot>
 					</span>
-					<button
-						type="button"
-						part="close-button"
-						@pointerdown="${this.close}"
-					>
-						<slot name="close-button">✖</slot>
+					<button part='close-button' type='button' @pointerdown='${this.close}'>
+						<slot name='close-button'>✖</slot>
 					</button>
 				</div>
-				<div part="body">
-					<slot name="body"></slot>
+				<div part='body'>
+					<slot name='body'></slot>
 				</div>
 			</div>
 		`;
 	}
+
+	static styles: CSSResultGroup = css`
+		:host {
+			display: block;
+			position: absolute;
+			z-index: 1;
+		}
+
+		[part='grid'] {
+			background: white;
+			border-radius: 0.25em;
+			box-shadow: 0 0.25em 0.5em rgba(0, 0, 0, 0.3), 0 0.5em 1em rgba(0, 0, 0, 0.2), 0 1em 2em rgba(0, 0, 0, 0.1);
+			color: black;
+			overflow: auto;
+		}
+
+		[part='head'] {
+			align-items: center;
+			border-block-end: thin solid rgba(0, 0, 0, 0.2);
+			display: grid;
+			font-size: 0.8em;
+			grid-template-columns: 1fr auto;
+		}
+
+		[part='close-button'] {
+			all: unset;
+			user-select: none;
+		}
+
+		[part='title'], [part='close-button'], [part='body'] {
+			padding: 1em;
+		}
+
+		[part='title'] {
+			font-weight: bold;
+		}
+
+		[part='close-button']:hover, [part='close-button']:focus {
+			background: rgba(0, 0, 0, 0.1);
+		}
+
+		[part='close-button']:active {
+			background: rgba(0, 0, 0, 0.2);
+		}
+	`;
 }
 
 customElements.define(UiModal.tagName, UiModal);
-
-export { UiModal };

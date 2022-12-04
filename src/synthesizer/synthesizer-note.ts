@@ -1,6 +1,4 @@
-import { mod } from '../math/index';
-
-class SynthesizerNote {
+export class SynthesizerNote {
 	public static readonly naturals: Array<number> = [0, 2, 4, 5, 7, 9, 11];
 	public static readonly accidentals: Array<number> = [1, 3, 6, 8, 10];
 
@@ -56,4 +54,6 @@ class SynthesizerNote {
 	}
 }
 
-export { SynthesizerNote };
+export function mod(a: number, b: number): number {
+	return ((a % b) + b) % b;
+}

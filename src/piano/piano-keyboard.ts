@@ -1,17 +1,14 @@
-import { CSSResultGroup, html, LitElement, PropertyDeclarations, TemplateResult } from 'lit';
-
+import { css, CSSResultGroup, html, LitElement, PropertyDeclarations, TemplateResult } from 'lit';
 import { Synthesizer, SynthesizerNote, SynthesizerOscillator } from '../synthesizer/index';
 import { KeyToNoteNumber } from './key-to-note-number';
 import { PianoKey } from './piano-key';
-import styles from './piano-keyboard.css';
 
 /**
  * @todo Handle caps lock
  */
-class PianoKeyboard extends LitElement  {
+export class PianoKeyboard extends LitElement {
 	public static tagName = 'piano-keyboard';
 	public static dependencies: Array<CustomElementConstructor> = [PianoKey];
-	public static styles: CSSResultGroup = styles;
 
 	public static properties: PropertyDeclarations = {
 		synthesizer: { type: Synthesizer },
@@ -59,7 +56,7 @@ class PianoKeyboard extends LitElement  {
 	private stopOscillator(key: string): boolean {
 		const oscillator: SynthesizerOscillator | undefined = this.keyToOscillatorMap.get(key);
 
-		if (this.synthesizer instanceof Synthesizer &&  oscillator instanceof SynthesizerOscillator) {
+		if (this.synthesizer instanceof Synthesizer && oscillator instanceof SynthesizerOscillator) {
 			const stopTime = this.synthesizer.currentTime + Math.max(0, this.minimumNoteDuration - oscillator.duration);
 			this.synthesizer.stopOscillator(oscillator, stopTime);
 			this.keyToOscillatorMap.delete(key);
@@ -88,7 +85,7 @@ class PianoKeyboard extends LitElement  {
 		}
 	}
 
-	private keyUpListener (event: KeyboardEvent): void {
+	private keyUpListener(event: KeyboardEvent): void {
 		if (!(event.ctrlKey || event.altKey || event.shiftKey)) {
 			this.stopOscillator(event.key) && event.preventDefault();
 		}
@@ -127,16 +124,11 @@ class PianoKeyboard extends LitElement  {
 			grid-column-start: ${column + 1};
 			grid-column-end: span 2;
 			z-index: ${zIndex};
-		`;
+		`.replace(/[\t\n]/g, '');
 
 		return html`
-			<piano-key
-				note-number=${noteNumber}
-				key="${key}"
-				.down="${this.keyToOscillatorMap.has(key)}"
-				label-source="${this.labelSource}"
-				style="${style}"
-			></piano-key>
+			<piano-key note-number=${noteNumber} key='${key}' .down='${this.keyToOscillatorMap.has(key)}'
+				label-source='${this.labelSource}' style='${style}'></piano-key>
 		`;
 	}
 
@@ -152,13 +144,35 @@ class PianoKeyboard extends LitElement  {
 
 	protected render(): TemplateResult {
 		return html`
-			<div part="grid">
+			<div part='grid'>
 				${this.renderKeys()}
 			</div>
 		`;
 	}
+
+	static styles: CSSResultGroup = css`
+		:host {
+			display: block;
+			touch-action: none;
+		}
+
+		[part='grid'] {
+			block-size: 100%;
+			box-sizing: border-box;
+			display: grid;
+			grid-template-columns: repeat(14, 1fr);
+			grid-template-rows: repeat(8, 1fr);
+			inline-size: 100%;
+			padding-block-end: 0.75em;
+			padding-block-start: 0.125em;
+			padding-inline: 0.25em;
+			transition: opacity 0.125s;
+		}
+
+		:host(:not(:focus):not(:focus-within)) [part='grid'] {
+			opacity: 0.5;
+		}
+	`;
 }
 
 customElements.define(PianoKeyboard.tagName, PianoKeyboard);
-
-export { PianoKeyboard };

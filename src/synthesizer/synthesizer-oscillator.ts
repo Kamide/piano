@@ -2,7 +2,7 @@ import { SynthesizerEnvelope } from './synthesizer-envelope';
 import { SynthesizerNode } from './synthesizer-node';
 import { SynthesizerNote } from './synthesizer-note';
 
-class SynthesizerOscillator extends SynthesizerNode {
+export class SynthesizerOscillator extends SynthesizerNode {
 	private gainEnvelope: SynthesizerEnvelope;
 	private oscillator: OscillatorNode;
 	private _wave!: OscillatorType | PeriodicWave;
@@ -15,7 +15,7 @@ class SynthesizerOscillator extends SynthesizerNode {
 		destinationNode: AudioNode,
 		gainEnvelope: SynthesizerEnvelope,
 		wave: OscillatorType | PeriodicWave,
-		note: SynthesizerNote
+		note: SynthesizerNote,
 	) {
 		super(context);
 		this.gainEnvelope = gainEnvelope;
@@ -86,5 +86,3 @@ class SynthesizerOscillator extends SynthesizerNode {
 		this.oscillator.addEventListener('ended', handler);
 	}
 }
-
-export { SynthesizerOscillator };

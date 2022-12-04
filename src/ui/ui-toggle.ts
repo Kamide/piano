@@ -1,6 +1,6 @@
 import { html, LitElement, nothing, PropertyDeclarations, TemplateResult } from 'lit';
 
-class UiToggle extends LitElement {
+export class UiToggle extends LitElement {
 	public static tagName = 'ui-toggle';
 
 	private visible: boolean;
@@ -51,12 +51,10 @@ class UiToggle extends LitElement {
 
 	protected render(): TemplateResult {
 		return html`
-			<slot @click="${this.clickHandler}"></slot>
-			${this.visible ? html`<slot name="toggled"></slot>` : nothing}
+			<slot @click='${this.clickHandler}'></slot>
+			${this.visible ? html`<slot name='toggled'></slot>` : nothing}
 		`;
 	}
 }
 
 customElements.define(UiToggle.tagName, UiToggle);
-
-export { UiToggle };

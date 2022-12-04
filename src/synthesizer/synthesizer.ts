@@ -3,7 +3,7 @@ import { SynthesizerNode } from './synthesizer-node';
 import { SynthesizerNote } from './synthesizer-note';
 import { SynthesizerOscillator } from './synthesizer-oscillator';
 
-class Synthesizer extends SynthesizerNode {
+export class Synthesizer extends SynthesizerNode {
 	private compressor: DynamicsCompressorNode;
 	public gainEnvelope: SynthesizerEnvelope;
 	public wave: OscillatorType | PeriodicWave;
@@ -13,7 +13,7 @@ class Synthesizer extends SynthesizerNode {
 	public constructor(
 		gainEnvelope: SynthesizerEnvelope,
 		wave: OscillatorType | PeriodicWave,
-		noteZeroFrequency: number
+		noteZeroFrequency: number,
 	) {
 		super(new AudioContext());
 		this.compressor = new DynamicsCompressorNode(this.context);
@@ -63,5 +63,3 @@ class Synthesizer extends SynthesizerNode {
 		}
 	}
 }
-
-export { Synthesizer };

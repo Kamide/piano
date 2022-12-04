@@ -1,4 +1,4 @@
-class SynthesizerNode {
+export class SynthesizerNode {
 	protected context: AudioContext;
 	protected gainNode: GainNode;
 
@@ -19,5 +19,3 @@ class SynthesizerNode {
 		this.gainNode.gain.setValueAtTime(value, this.currentTime);
 	}
 }
-
-export { SynthesizerNode };

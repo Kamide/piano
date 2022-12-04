@@ -13,8 +13,7 @@
  *   +------------------------------------>
  *     Time
  */
-
-class SynthesizerEnvelope {
+export class SynthesizerEnvelope {
 	public delayTime: number; // [0, ∞)
 	public minimumAmplitude: number; // [0, 1]
 	public attackTime: number; // [0, ∞)
@@ -30,7 +29,7 @@ class SynthesizerEnvelope {
 		maximumAmplitude = 1,
 		decayTime = 0,
 		sustainAmplitude = 1,
-		releaseTime = 0
+		releaseTime = 0,
 	) {
 		this.delayTime = delayTime;
 		this.minimumAmplitude = minimumAmplitude;
@@ -73,5 +72,3 @@ class SynthesizerEnvelope {
 		this.release(audioParam, time, amplitude);
 	}
 }
-
-export { SynthesizerEnvelope };

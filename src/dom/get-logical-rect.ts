@@ -1,13 +1,13 @@
 import { getWritingDirection, LogicalAxis, LogicalEdge, LogicalSize, WritingDirection } from './get-writing-direction';
 
-type LogicalRect = {
+export type LogicalRect = {
 	physicalRect: DOMRect;
 	writingDirection: WritingDirection;
 } & {
 	[P in LogicalAxis | LogicalEdge | LogicalSize]: number;
 };
 
-function getLogicalRect(element: Element): LogicalRect {
+export function getLogicalRect(element: Element): LogicalRect {
 	const writingDirection: WritingDirection = getWritingDirection(element);
 	const physicalRect: DOMRect = element.getBoundingClientRect();
 	const logicalRect: Partial<LogicalRect> = { physicalRect, writingDirection };
@@ -18,5 +18,3 @@ function getLogicalRect(element: Element): LogicalRect {
 
 	return logicalRect as LogicalRect;
 }
-
-export { LogicalRect, getLogicalRect };

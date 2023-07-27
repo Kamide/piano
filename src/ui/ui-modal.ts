@@ -13,13 +13,13 @@ export class UiModal extends LitElement {
 		blockOffset: { type: Number, attribute: 'b1', reflect: true },
 	};
 
-	private closeEvent: string;
-	private parent: Element;
-	private parentInlineOffset: number;
-	private parentBlockOffset: number;
-	private inlineOffset: number;
-	private blockOffset: number;
-	private resizeObserver: ResizeObserver;
+	declare private closeEvent: string;
+	declare private parent: Element;
+	declare private parentInlineOffset: number;
+	declare private parentBlockOffset: number;
+	declare private inlineOffset: number;
+	declare private blockOffset: number;
+	declare private resizeObserver: ResizeObserver;
 
 	/**
 	 * Left-to-right, top-to-bottom
@@ -107,10 +107,8 @@ export class UiModal extends LitElement {
 		}
 	};
 
-	private close(event: PointerEvent): void {
-		if (event.buttons === 1 && this.closeEvent.length > 0) {
-			this.dispatchEvent(new CustomEvent(this.closeEvent, { bubbles: true }));
-		}
+	private close(): void {
+		this.dispatchEvent(new CustomEvent(this.closeEvent, { bubbles: true }));
 	}
 
 	protected render(): TemplateResult {
@@ -120,7 +118,7 @@ export class UiModal extends LitElement {
 					<span part='title'>
 						<slot name='title'></slot>
 					</span>
-					<button part='close-button' type='button' @pointerdown='${this.close}'>
+					<button part='close-button' type='button' @click='${this.close}'>
 						<slot name='close-button'>✖</slot>
 					</button>
 				</div>

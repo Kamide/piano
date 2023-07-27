@@ -17,11 +17,11 @@ export class PianoKeyboard extends LitElement {
 		labelSource: { type: String, attribute: 'label-source', reflect: true },
 	};
 
-	private synthesizer: Synthesizer | null;
-	private minimumNoteDuration: number;
-	private labelSource: string;
-	private keyToNoteNumberMap: Map<string, number>;
-	private keyToOscillatorMap: Map<string, SynthesizerOscillator>;
+	declare private synthesizer: Synthesizer | null;
+	declare private minimumNoteDuration: number;
+	declare private labelSource: string;
+	declare private keyToNoteNumberMap: Map<string, number>;
+	declare private keyToOscillatorMap: Map<string, SynthesizerOscillator>;
 
 	public constructor() {
 		super();

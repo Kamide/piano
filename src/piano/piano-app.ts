@@ -47,16 +47,16 @@ export class PianoApp extends LitElement {
 		keyLabelSource: { type: String, attribute: 'key-label-source', reflect: true },
 	};
 
-	private wave: OscillatorType | 'flute';
-	private frequencyString: string;
-	private volume: number;
-	private minimumNoteDuration: number;
+	declare private wave: OscillatorType | 'flute';
+	declare private frequencyString: string;
+	declare private volume: number;
+	declare private minimumNoteDuration: number;
 
-	private gainEnvelope: SynthesizerEnvelope;
-	private synthesizer: Synthesizer;
+	declare private gainEnvelope: SynthesizerEnvelope;
+	declare private synthesizer: Synthesizer;
 
-	private keyLabelSource: string;
-	private keyboardRef: Ref<PianoKeyboard>;
+	declare private keyLabelSource: string;
+	declare private keyboardRef: Ref<PianoKeyboard>;
 
 	public constructor() {
 		super();

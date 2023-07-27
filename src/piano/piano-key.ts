@@ -10,9 +10,9 @@ export class PianoKey extends LitElement {
 		labelSource: { type: String, attribute: 'label-source', reflect: true },
 	};
 
-	private noteNumber: number;
-	private key: string;
-	private labelSource: string;
+	declare private noteNumber: number;
+	declare private key: string;
+	declare private labelSource: string;
 
 	public constructor() {
 		super();

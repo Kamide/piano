@@ -3,7 +3,7 @@ import { html, LitElement, nothing, PropertyDeclarations, TemplateResult } from 
 export class UiToggle extends LitElement {
 	public static tagName = 'ui-toggle';
 
-	private visible: boolean;
+	declare private visible: boolean;
 
 	public static properties: PropertyDeclarations = {
 		visible: { type: Boolean, reflect: true },
